@@ -26,7 +26,7 @@ This module has some costume database validators using class-validator and typeo
 
 ### Quick Start
 
-To configure the module you need just to add typeorm configuration using register()
+To configure the module you need to add typeorm configuration using register()
 
 Example : 
 
@@ -70,7 +70,7 @@ export class StreetDto {
   ...
 ```
 
-Ps : In version 1.1.0 you can use IsArray to trait to value as an Array and check if all the values are exists on the table, as an example:
+Ps : In version 1.1.0 you can use IsArray to trait the value as an Array and check if all the values of the array are exists in the table, as an example:
 
 ```typescript
   @Validate(IsExist, 
