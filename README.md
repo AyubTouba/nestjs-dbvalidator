@@ -92,8 +92,10 @@ export class StreetDto {
   name: string;
   ...
 ```
-You can Add 'message' as a parameter to costume your error message
-
+You can add 'message' as a parameter to custom your error message
+```typescript
+ [ { table: "company", column: "name",message:"this company already exist" }] 
+```
 ### To Do
 
 - [X] Implement to these validators to check array of values 
