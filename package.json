@@ -42,7 +42,7 @@
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.0",
     "rxjs": "^6.5.4",
-    "@nestjs/core": "^6.7.2"
+    "@nestjs/core": "^9.0.5"
   },
   "dependencies": {
     "@nestjs/common": "^9.3.12",
@@ -52,7 +52,7 @@
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.0",
     "rxjs": "^6.5.4",
-    "@nestjs/core": "^6.7.2"
+    "@nestjs/core": "^9.0.5"
   },
   "devDependencies": {
     "@nestjs/cli": "^6.13.2",
