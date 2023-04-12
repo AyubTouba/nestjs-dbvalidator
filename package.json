@@ -1,6 +1,6 @@
 {
   "name": "@youba/nestjs-dbvalidator",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "NestJS module dbvalidator",
   "author": "Ayoub touba <ayubtouba@gmail.com>",
   "license": "MIT",
