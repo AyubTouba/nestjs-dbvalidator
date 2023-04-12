@@ -1,10 +1,16 @@
-import { getManager } from 'typeorm';
+import { getConnection, getManager } from 'typeorm';
 import { UtilsService } from './utils.service';
+import { DbService } from './database.service';
 
 export class QueryService {
   static getEqualQuery(valueColumn: any, params: any): string {
     let whereCondition = `1 = 1 and `;
     let isNum = /^\d+$/.test(valueColumn);
+
+    const colmunName =
+      DbService.getDatabaseType() == 'postgres'
+        ? `"${params.column}"`
+        : `${params.column}`;
 
     if (
       params.isArray ||
@@ -12,17 +18,27 @@ export class QueryService {
       Array.isArray(valueColumn) ||
       valueColumn instanceof Array
     )
-      whereCondition = ` "${params.column}" in (${valueColumn}) `;
+      whereCondition = ` ${colmunName} in (${valueColumn}) `;
     else if (isNum || valueColumn instanceof Number)
-      whereCondition = ` "${params.column}" = ${valueColumn} `;
+      whereCondition = ` ${colmunName} = ${valueColumn} `;
     else if (typeof valueColumn === 'string' || valueColumn instanceof String)
-      whereCondition = ` "${params.column}" like '${valueColumn}' `;
+      whereCondition = ` ${colmunName} like '${valueColumn}' `;
 
     return whereCondition;
   }
 
   static getQuery(conditionQuery: string, params: any): string {
-    let query = `select "${params.column}" from "${params.table}" where ${conditionQuery}  `;
+    const colmunName =
+      DbService.getDatabaseType() == 'postgres'
+        ? `"${params.column}"`
+        : `${params.column}`;
+
+    const tableName =
+      DbService.getDatabaseType() == 'postgres'
+        ? `"${params.table}"`
+        : `${params.table}`;
+
+    let query = `select ${colmunName} from ${tableName} where ${conditionQuery}  `;
 
     return query;
   }
@@ -44,5 +60,11 @@ export class QueryService {
     inputArray = UtilsService.deleteDuplicate(inputArray);
 
     return data.length >= inputArray.length ? true : false;
+  }
+
+  static getDatabaseType() {
+    const connection = getConnection();
+    console.log(connection.options.type);
+    return connection.options.type;
   }
 }
