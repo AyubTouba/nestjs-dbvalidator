@@ -6,14 +6,22 @@ import { DbConnectOptions } from './interfaces/DbConnectOption.interface';
 import { QueryService } from './services/query.service';
 import { UtilsService } from './services/utils.service';
 import { DbService } from './services/database.service';
+import { isBigger } from './validators/isBigger.validator';
+import { isLower } from './validators/isLower.validator';
 
 @Module({})
 export class DbValidatorsModule {
   static register(options: DbConnectOptions): DynamicModule {
     return {
       module: DbValidatorsModule,
-      providers: [...this.createConnectProviders(options), IsUnique, IsExist],
-      exports: [IsUnique, IsExist],
+      providers: [
+        ...this.createConnectProviders(options),
+        IsUnique,
+        IsExist,
+        isBigger,
+        isLower,
+      ],
+      exports: [IsUnique, IsExist, isBigger, isLower],
       imports: [QueryService, UtilsService, DbService],
     };
   }
