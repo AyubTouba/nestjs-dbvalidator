@@ -1,16 +1,14 @@
 import { getConnection, getManager } from 'typeorm';
 import { UtilsService } from './utils.service';
 import { DbService } from './database.service';
+import { OPERATION } from './enums';
 
 export class QueryService {
   static getEqualQuery(valueColumn: any, params: any): string {
     let whereCondition = `1 = 1 and `;
     let isNum = /^\d+$/.test(valueColumn);
 
-    const colmunName =
-      DbService.getDatabaseType() == 'postgres'
-        ? `"${params.column}"`
-        : `${params.column}`;
+    const colmunName = QueryService.getQueryColumn(params.column);
 
     if (
       params.isArray ||
@@ -28,15 +26,8 @@ export class QueryService {
   }
 
   static getQuery(conditionQuery: string, params: any): string {
-    const colmunName =
-      DbService.getDatabaseType() == 'postgres'
-        ? `"${params.column}"`
-        : `${params.column}`;
-
-    const tableName =
-      DbService.getDatabaseType() == 'postgres'
-        ? `"${params.table}"`
-        : `${params.table}`;
+    const colmunName = QueryService.getQueryColumn(params.column);
+    const tableName = QueryService.getQueryColumn(params.table);
 
     let query = `select ${colmunName} from ${tableName} where ${conditionQuery}  `;
 
@@ -62,9 +53,26 @@ export class QueryService {
     return data.length >= inputArray.length ? true : false;
   }
 
-  static getDatabaseType() {
-    const connection = getConnection();
-    console.log(connection.options.type);
-    return connection.options.type;
+  static getOperationQuery(
+    valueColumn: any,
+    params: any,
+    operation: OPERATION = OPERATION.BIGGER,
+  ): string {
+    let whereCondition = `1 = 1 and `;
+
+    let isNum = /^\d+$/.test(valueColumn);
+
+    const colmunName = QueryService.getQueryColumn(params.column);
+
+    if (isNum || valueColumn instanceof Number)
+      whereCondition = ` ${colmunName} ${operation} ${valueColumn} `;
+
+    return whereCondition;
+  }
+
+  static getQueryColumn(column) {
+    return DbService.getDatabaseType() == 'postgres'
+      ? `"${column}"`
+      : `${column}`;
   }
 }
