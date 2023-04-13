@@ -35,24 +35,24 @@
   },
   "bugs": "https://github.com/AyubTouba/nestjs-dbvalidator",
   "peerDependencies": {
-    "@nestjs/common": "^6.7.2",
+    "@nestjs/common": "^9.3.12",
     "@nestjs/typeorm": "^7.0.0",
-    "class-validator": "^0.12.2",
+    "class-validator": "^0.14.0",
     "typeorm": "^0.2.25",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.0",
     "rxjs": "^6.5.4",
-    "@nestjs/core": "^6.7.2"
+    "@nestjs/core": "^9.0.5"
   },
   "dependencies": {
-    "@nestjs/common": "^6.7.2",
+    "@nestjs/common": "^9.3.12",
     "@nestjs/typeorm": "^7.0.0",
-    "class-validator": "^0.12.2",
+    "class-validator": "^0.14.0",
     "typeorm": "^0.2.25",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.0",
     "rxjs": "^6.5.4",
-    "@nestjs/core": "^6.7.2"
+    "@nestjs/core": "^9.0.5"
   },
   "devDependencies": {
     "@nestjs/cli": "^6.13.2",
@@ -70,7 +70,7 @@
     "jest": "^24.9.0",
     "prettier": "^1.18.2",
     "supertest": "^4.0.2",
-    "ts-jest": "25.2.0",
+    "ts-jest": "25.5.1",
     "ts-loader": "^6.2.1",
     "ts-node": "^8.6.0",
     "tsconfig-paths": "^3.9.0",
