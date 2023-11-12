@@ -1,4 +1,4 @@
-import { getConnection, getManager } from 'typeorm';
+import { getManager } from 'typeorm';
 import { UtilsService } from './utils.service';
 import { DbService } from './database.service';
 import { OPERATION } from './enums';
@@ -8,7 +8,7 @@ export class QueryService {
     let whereCondition = `1 = 1 and `;
     let isNum = /^\d+$/.test(valueColumn);
 
-    const colmunName = QueryService.getQueryColumn(params.column);
+    const columnName = QueryService.getQueryColumn(params.column);
 
     if (
       params.isArray ||
@@ -16,25 +16,25 @@ export class QueryService {
       Array.isArray(valueColumn) ||
       valueColumn instanceof Array
     )
-      whereCondition = ` ${colmunName} in (${valueColumn}) `;
+      whereCondition = ` ${columnName} in (${valueColumn}) `;
     else if (isNum || valueColumn instanceof Number)
-      whereCondition = ` ${colmunName} = ${valueColumn} `;
+      whereCondition = ` ${columnName} = ${valueColumn} `;
     else if (typeof valueColumn === 'string' || valueColumn instanceof String)
-      whereCondition = ` ${colmunName} like '${valueColumn}' `;
+      whereCondition = ` ${columnName} like '${valueColumn}' `;
 
     return whereCondition;
   }
 
   static getQuery(conditionQuery: string, params: any): string {
-    const colmunName = QueryService.getQueryColumn(params.column);
+    const columnName = QueryService.getQueryColumn(params.column);
     const tableName = QueryService.getQueryColumn(params.table);
 
-    let query = `select ${colmunName} from ${tableName} where ${conditionQuery}  `;
-
-    return query;
+    return `select ${columnName}
+            from ${tableName}
+            where ${conditionQuery}  `;
   }
 
-  static async getDataQuery(query): Promise<any> {
+  static async getDataQuery(query: string): Promise<any> {
     try {
       return await getManager().query(query);
     } catch (error) {
@@ -50,7 +50,7 @@ export class QueryService {
     inputArray = UtilsService.convertToArray(inputArray);
     inputArray = UtilsService.deleteDuplicate(inputArray);
 
-    return data.length >= inputArray.length ? true : false;
+    return data.length >= inputArray.length;
   }
 
   static getOperationQuery(
@@ -62,15 +62,15 @@ export class QueryService {
 
     let isNum = /^\d+$/.test(valueColumn);
 
-    const colmunName = QueryService.getQueryColumn(params.column);
+    const columnName = QueryService.getQueryColumn(params.column);
 
     if (isNum || valueColumn instanceof Number)
-      whereCondition = ` ${colmunName} ${operation} ${valueColumn} `;
+      whereCondition = ` ${columnName} ${operation} ${valueColumn} `;
 
     return whereCondition;
   }
 
-  static getQueryColumn(column) {
+  static getQueryColumn(column: any) {
     return DbService.getDatabaseType() == 'postgres'
       ? `"${column}"`
       : `${column}`;

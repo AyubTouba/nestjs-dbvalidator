@@ -1,21 +1,18 @@
+export interface ValidatorParamsInterface {
 
-export class ValidatorParams {
-  
   /**
    * Table name
    */
-  table : string ;
- 
+  table: string;
+
   /**
    * column name
    */
   column: string;
 
   /**
-   * isArray : is colmun consider as Array  
+   * isArray : is colmun consider as Array
    */
   isArray?: boolean;
-  
-  
 
 }

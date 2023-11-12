@@ -1,9 +1,9 @@
 import { registerDecorator, ValidationOptions } from 'class-validator';
-import { isBigger } from '../isBigger.validator';
-import { isLower } from '../isLower.validator';
+import { IsBiggerValidator } from '../is-bigger.validator';
+import { IsLowerValidator } from '../is-lower.validator';
 
 /*
- * isUnique is custom  validator is to check if any X colmun of X table is Already exist
+ * isUnique is custom  validator is to check if any X column of X table is Already exist
  */
 
 export function isLowerDb(
@@ -17,7 +17,7 @@ export function isLowerDb(
       propertyName: propertyName,
       constraints: [property],
       options: validationOptions,
-      validator: isLower,
+      validator: IsLowerValidator,
     });
   };
 }
