@@ -1,11 +1,10 @@
+export interface DbConnectOptionsInterface {
 
-export class DbConnectOptions {
-  
   /**
    * Database Type
    */
-  type : any ;
- 
+  type: any;
+
   /**
    * server name or IP address
    */
@@ -26,6 +25,5 @@ export class DbConnectOptions {
    * user password, or a function that returns one
    */
   password: string;
-  
 
 }

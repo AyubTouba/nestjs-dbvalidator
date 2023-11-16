@@ -4,24 +4,19 @@ import {
   ValidationArguments,
 } from 'class-validator';
 import { Injectable } from '@nestjs/common';
-import { QueryService } from '../services/query.service';
-import { OPERATION } from 'src/services/enums';
+import { QueryService } from '../services';
 
 /*
- * isUnique is custom  validator is to check if any X colmun of X table is Already exist
+ * isUnique is custom  validator is to check if any X column of X table is Already exist
  */
 @Injectable()
 @ValidatorConstraint({ async: true })
-export class isLower implements ValidatorConstraintInterface {
-  async validate(colmunValue: any, args: ValidationArguments) {
+export class IsBiggerValidator implements ValidatorConstraintInterface {
+  async validate(columnValue: any, args: ValidationArguments) {
     const params = args.constraints[0];
-    if (!colmunValue) return true;
+    if (!columnValue) return true;
     try {
-      let condition = QueryService.getOperationQuery(
-        colmunValue,
-        params,
-        OPERATION.LOWER,
-      );
+      let condition = QueryService.getOperationQuery(columnValue, params);
       let query = QueryService.getQuery(condition, params);
       let resultQuery = await QueryService.getDataQuery(query);
 
@@ -34,7 +29,7 @@ export class isLower implements ValidatorConstraintInterface {
   defaultMessage(args: ValidationArguments) {
     // here you can provide default error message if validation failed
     const params = args.constraints[0];
-    if (!params.message) return `the ${args.property} is not lower `;
+    if (!params.message) return `the ${args.property} is not bigger `;
     else return params.message;
   }
 }

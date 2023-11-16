@@ -1,32 +1,31 @@
 import { Module, Provider, DynamicModule } from '@nestjs/common';
-import { IsUnique } from './validators/isunique.validator';
-import { IsExist } from './validators/isexist.validator';
+import { IsUniqueValidator } from './validators/is-unique.validator';
+import { IsExistValidator } from './validators/is-exist.validator';
 import { createConnection } from 'typeorm';
-import { DbConnectOptions } from './interfaces/DbConnectOption.interface';
-import { QueryService } from './services/query.service';
-import { UtilsService } from './services/utils.service';
+import { DbConnectOptionsInterface } from './interfaces';
+import { QueryService, UtilsService } from './services';
 import { DbService } from './services/database.service';
-import { isBigger } from './validators/isBigger.validator';
-import { isLower } from './validators/isLower.validator';
+import { IsBiggerValidator } from './validators/is-bigger.validator';
+import { IsLowerValidator } from './validators/is-lower.validator';
 
 @Module({})
 export class DbValidatorsModule {
-  static register(options: DbConnectOptions): DynamicModule {
+  static register(options: DbConnectOptionsInterface): DynamicModule {
     return {
       module: DbValidatorsModule,
       providers: [
         ...this.createConnectProviders(options),
-        IsUnique,
-        IsExist,
-        isBigger,
-        isLower,
+        IsUniqueValidator,
+        IsExistValidator,
+        IsBiggerValidator,
+        IsLowerValidator,
       ],
-      exports: [IsUnique, IsExist, isBigger, isLower],
+      exports: [IsUniqueValidator, IsExistValidator, IsBiggerValidator, IsLowerValidator],
       imports: [QueryService, UtilsService, DbService],
     };
   }
 
-  private static createConnectProviders(options: DbConnectOptions): Provider[] {
+  private static createConnectProviders(options: DbConnectOptionsInterface): Provider[] {
     return [
       {
         provide: 'DATABASE_CONNECTION',

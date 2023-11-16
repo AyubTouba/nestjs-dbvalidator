@@ -1,2 +1,2 @@
-export * from './ValidatorParams.interface';
-export * from './DbConnectOption.interface';
+export * from './validator-params.interface';
+export * from './db-connect-options.interface';
