@@ -1,5 +1,4 @@
 export interface ValidatorParamsInterface {
-
   /**
    * Table name
    */
@@ -14,5 +13,4 @@ export interface ValidatorParamsInterface {
    * isArray : is colmun consider as Array
    */
   isArray?: boolean;
-
 }
