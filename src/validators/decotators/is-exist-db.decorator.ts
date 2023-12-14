@@ -1,11 +1,14 @@
 import { registerDecorator, ValidationOptions } from 'class-validator';
 import { IsExistValidator } from '../is-exist.validator';
 
-/*
- * isUnique is custom validator is to check if any X column of X table is Already exist
-*/
-
-export function isExistDb(property: any, validationOptions?: ValidationOptions) {
+/**
+ * `isExistDb` is a custom validator decorator to check if a certain column of a certain table already exists in the database.
+ *
+ * @param {any} property - The property to compare with.
+ * @param {ValidationOptions} validationOptions - Optional validation options.
+ * @returns {Function} - Returns a function that registers the custom validator.
+ */
+export function isExistDb(property: any, validationOptions?: ValidationOptions): Function {
   return function(object: Object, propertyName: string) {
     registerDecorator({
       name: 'isExistDb',

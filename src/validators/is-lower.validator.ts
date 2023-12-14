@@ -7,8 +7,8 @@ import { Injectable } from '@nestjs/common';
 import { QueryService } from '../services';
 import { OPERATION } from 'src/services/enums';
 
-/*
- * isUnique is custom  validator is to check if any X column of X table is Already exist
+/**
+ * `IsLowerValidator` is a custom validator to check if a certain column value is lower than a certain value in the database.
  */
 @Injectable()
 @ValidatorConstraint({ async: true })
@@ -31,8 +31,11 @@ export class IsLowerValidator implements ValidatorConstraintInterface {
     }
   }
 
+  /**
+   * `defaultMessage` is a function that returns the default error message if validation failed.
+   * @param args
+   */
   defaultMessage(args: ValidationArguments) {
-    // here you can provide default error message if validation failed
     const params = args.constraints[0];
     if (!params.message) return `the ${args.property} is not lower `;
     else return params.message;

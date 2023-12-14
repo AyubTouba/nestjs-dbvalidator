@@ -1,4 +1,3 @@
-import { getManager } from 'typeorm';
 import { UtilsService } from './utils.service';
 import { DbService } from './database.service';
 import { OPERATION } from './enums';
@@ -36,9 +35,11 @@ export class QueryService {
 
   static async getDataQuery(query: string): Promise<any> {
     try {
-      return await getManager().query(query);
+      const dataSource = DbService.getDataSource();
+      return await dataSource.query(query);
     } catch (error) {
-      console.log(error);
+      console.log('Error in getDataQuery: ', error);
+      throw new Error(error);
     }
   }
 
@@ -71,7 +72,7 @@ export class QueryService {
   }
 
   static getQueryColumn(column: any) {
-    return DbService.getDatabaseType() == 'postgres'
+    return DbService.getDataSourceType() == 'postgres'
       ? `"${column}"`
       : `${column}`;
   }
