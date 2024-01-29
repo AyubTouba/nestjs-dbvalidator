@@ -1,6 +1,6 @@
 {
   "name": "@youba/nestjs-dbvalidator",
-  "version": "1.1.3",
+  "version": "2.0.0",
   "description": "NestJS module dbvalidator",
   "author": "Ayoub touba <ayubtouba@gmail.com>",
   "license": "MIT",
@@ -24,7 +24,9 @@
   "keywords": [
     "nestjs",
     "class-validator",
-    "typeorm"
+    "typeorm",
+    "Database validation",
+    "Dto validation"
   ],
   "publishConfig": {
     "access": "public"

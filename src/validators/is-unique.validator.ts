@@ -5,6 +5,7 @@ import {
 } from 'class-validator';
 import { Injectable } from '@nestjs/common';
 import { QueryService } from '../services';
+import { ValidatorParamsInterface } from 'src/interfaces';
 
 /**
  * `IsUniqueValidator` is a custom validator to check if a certain column of a certain table is unique in the database.
@@ -13,7 +14,7 @@ import { QueryService } from '../services';
 @ValidatorConstraint({ async: true })
 export class IsUniqueValidator implements ValidatorConstraintInterface {
   async validate(columnValue: any, args: ValidationArguments) {
-    const params = args.constraints[0];
+    const params = args.constraints[0] as ValidatorParamsInterface;
 
     try {
       let condition = QueryService.getEqualQuery(columnValue, params);

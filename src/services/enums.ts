@@ -3,3 +3,7 @@ export const enum OPERATION {
 
   LOWER = '<',
 }
+export const enum TYPECOLUMN {
+  STRING = 'string',
+  NUMBER = 'number',
+}
