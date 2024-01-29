@@ -1,5 +1,4 @@
 export interface DbConnectOptionsInterface {
-
   /**
    * Database Type
    */
@@ -25,5 +24,4 @@ export interface DbConnectOptionsInterface {
    * user password, or a function that returns one
    */
   password: string;
-
 }

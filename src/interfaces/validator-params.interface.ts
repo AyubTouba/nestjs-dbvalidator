@@ -1,5 +1,6 @@
-export interface ValidatorParamsInterface {
+import { TYPECOLUMN } from 'src/services/enums';
 
+export interface ValidatorParamsInterface {
   /**
    * Table name
    */
@@ -15,4 +16,8 @@ export interface ValidatorParamsInterface {
    */
   isArray?: boolean;
 
+  /**
+   * customType : How you want to trait the colummn
+   */
+  customType?: TYPECOLUMN;
 }

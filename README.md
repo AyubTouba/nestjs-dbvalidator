@@ -12,7 +12,11 @@
 
 # nestjs-DbValidator
 
-This module has some costume database validators using class-validator and typeorm
+This module provides custom database validators using class-validator and typeorm.
+
+## Important Note
+
+For Nestjs V8 and below, use version 1.1.3.
 
 ## Installation
 
@@ -24,7 +28,7 @@ This module has some costume database validators using class-validator and typeo
 
 ## Quick Start
 
-To configure the module you need to add typeorm configuration using register()
+To configure the module, you need to add the typeorm configuration using register()
 
 ```typescript
 // src/xModule/x.module.ts
@@ -53,7 +57,7 @@ export class StreetModule {
 
 ## Usage/Examples
 
-Now you can use the nestjs-dbvalidator, First validator is “IsExist” to check if the value is already exist in the table, For example:
+Now you can use nestjs-dbvalidator. The first validator is isExistDb, which checks if the value already exists in the table. For example:
 
 ```typescript
 // src/xModule/x.dto.ts
@@ -70,16 +74,14 @@ export class StreetDto {
   ...
 ```
 
-#### Ps : In version 1.1.0 you can use IsArray to trait the value as an Array and check if all the values of the array are exists in the table, as an example:
+#### Note: In version 1.1.0, you can use IsArray to treat the value as an array and check if all the values of the array exist in the table. For example::
 
 ```typescript
   @isExistDb({ table: 'user', column: 'firstName', isArray:true })
   idcities: any;
 ```
 
-
 ## All Validators
-
 
 | Parameter    | Description                                                  |     |
 | :----------- | :----------------------------------------------------------- | :-- |
@@ -88,12 +90,13 @@ export class StreetDto {
 | `isLowerDb`  | Check if the value is lower _(example:check client credits)_ |     |
 | `isBiggerDb` | Check if the value is bigger _(example:check stock)_         |     |
 
-| Parameter | Description                                               |              |
-| :-------- | :-------------------------------------------------------- | :----------- |
-| `table`   | table name                                                | **Required** |
-| `column`  | column name                                               | **Required** |
-| `message` | custom error message                                      | _optional_   |
-| `isArray` | check in array (_works only with isExistDb & isUniqueDb_) | _optional_   |
+| Parameter                 | Description                                                                                      |              |
+| :------------------------ | :----------------------------------------------------------------------------------------------- | :----------- |
+| `table`                   | Table name                                                                                       | **Required** |
+| `column`                  | Column name                                                                                      | **Required** |
+| `message`                 | Custom error message                                                                             | _optional_   |
+| `isArray`                 | Check in array (_works only with isExistDb & isUniqueDb_)                                        | _optional_   |
+| `customType` only in V2.0 | CChanges the type column for validation (Use TYPECOLUMN enums to select a type (NUMBER, STRING)) | _optional_   |
 
 ## License
 

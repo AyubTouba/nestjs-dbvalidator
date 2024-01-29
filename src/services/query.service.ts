@@ -1,13 +1,12 @@
-import { getManager } from 'typeorm';
 import { UtilsService } from './utils.service';
 import { DbService } from './database.service';
-import { OPERATION } from './enums';
+import { OPERATION, TYPECOLUMN } from './enums';
 
 export class QueryService {
   static getEqualQuery(valueColumn: any, params: any): string {
     let whereCondition = `1 = 1 and `;
     let isNum = /^\d+$/.test(valueColumn);
-
+    let isCustomType = params.customType || false;
     const columnName = QueryService.getQueryColumn(params.column);
 
     if (
@@ -17,11 +16,18 @@ export class QueryService {
       valueColumn instanceof Array
     )
       whereCondition = ` ${columnName} in (${valueColumn}) `;
-    else if (isNum || valueColumn instanceof Number)
+    else if (
+      (isCustomType && isCustomType == TYPECOLUMN.NUMBER) ||
+      (!isCustomType && isNum) ||
+      (!isCustomType && valueColumn instanceof Number)
+    )
       whereCondition = ` ${columnName} = ${valueColumn} `;
-    else if (typeof valueColumn === 'string' || valueColumn instanceof String)
+    else if (
+      (isCustomType && isCustomType == TYPECOLUMN.STRING) ||
+      (!isCustomType && typeof valueColumn === 'string') ||
+      (!isCustomType && valueColumn instanceof String)
+    )
       whereCondition = ` ${columnName} like '${valueColumn}' `;
-
     return whereCondition;
   }
 
@@ -36,9 +42,11 @@ export class QueryService {
 
   static async getDataQuery(query: string): Promise<any> {
     try {
-      return await getManager().query(query);
+      const dataSource = DbService.getDataSource();
+      return await dataSource.query(query);
     } catch (error) {
-      console.log(error);
+      console.log('Error in getDataQuery: ', error);
+      throw new Error(error);
     }
   }
 
@@ -71,7 +79,7 @@ export class QueryService {
   }
 
   static getQueryColumn(column: any) {
-    return DbService.getDatabaseType() == 'postgres'
+    return DbService.getDataSourceType() == 'postgres'
       ? `"${column}"`
       : `${column}`;
   }
